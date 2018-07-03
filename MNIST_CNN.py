@@ -109,6 +109,5 @@ for i in range(10):
     print("test accuracy %g"%accuracy.eval(feed_dict={ x:  test_batct_xs, 
                                                       y_hat: test_batch_ys, 
                                                       keep_prob: 1.0}))    
-print("1")
 sess.close()
 
