@@ -43,17 +43,17 @@ learning_rate = 1e-4
 n_size = 28
 n_class = 10
 
-n_kernel = 5
+n_kernel = 5 # kernel size
 n_channel_0 = 1
-n_channel_1 = 32
-n_channel_2 = 64
-n_node = 512
+n_channel_1 = 32 # node for 1st conv layer
+n_channel_2 = 64 # node for 2nd conv layer 
+n_node = 512 # node for FC layer
 n_input = 7*7*n_channel_2
 
 # Establish Model
 x = tf.placeholder(tf.float32,shape = [None,n_size*n_size])
 y_hat = tf.placeholder(tf.float32,shape = [None,n_class])
-x_input = tf.reshape(x, [-1,n_size,n_size,n_channel_0])#-1 denotes orignal size
+x_input = tf.reshape(x, [-1,n_size,n_size,n_channel_0])# -1 denotes orignal size
 
 # 1st Layer: 1 conv layer + 1 pooling layer
     # kernel size: [height,width,channel0,channel1]
@@ -82,7 +82,7 @@ h_fc1_drop = tf.nn.dropout(h_fc1, keep_prob)
 
 w_fc2 = init_weight_variable([n_node, n_class])
 b_fc2 = init_bias_variable([n_class])
-
+# compute output
 y_output = tf.nn.softmax(tf.matmul(h_fc1_drop, w_fc2) + b_fc2)
 
 # Cost Function
@@ -100,7 +100,7 @@ for i in range(20000):
     if i%100 == 0:
         print("step %d"%i)
     train_step.run(feed_dict={x:batch_xs,y_hat:batch_ys,keep_prob:0.5})
-
+# test CNN on test set
 for i in range(10):    
     test_batct_xs,test_batch_ys = mnist.test.next_batch(1000)    
     print("test accuracy %g"%accuracy.eval(feed_dict={ x:  test_batct_xs, 
